@@ -1,0 +1,13 @@
+<div id="shiftContainer">
+  <mat-card id="shiftCard">
+    <mat-card-title id="title">View Shifts</mat-card-title>
+    <button mat-flat-button color="accent" id="addShiftButton" (click)="addShift()">Add Shift</button>
+
+    <app-table-list
+      [inputStream]="shiftStream"
+      [prettifiedColumns]="prettifiedColumns"
+      [columnsToDisplay]="columnsToDisplay"
+      (itemClicked)="openBottomSheet($event)"
+    ></app-table-list>
+  </mat-card>
+</div>

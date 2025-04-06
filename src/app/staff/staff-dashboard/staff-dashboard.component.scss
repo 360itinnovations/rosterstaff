@@ -1,0 +1,51 @@
+$medium-size: 940px;
+$mobile-size: 500px;
+
+#container {
+  width: 100%;
+  height: calc(100% - 64px);
+
+  #dashboardContainer {
+    height: 100%;
+    margin: auto;
+    width: 90%;
+    padding-top: 2em;    
+
+    @media (max-width: $mobile-size) {
+      width: 100%;
+    }
+
+    #shiftCards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between; 
+      height: 10%;
+
+      @media (max-width: $medium-size) {
+        height: fit-content;
+      }
+    }
+
+    .topRowCard {
+      width: 30%;
+      min-width: 200px;
+
+      @media (max-width: $medium-size) {
+        width: 100%;
+        box-shadow: none;
+      }
+    }
+    
+    #messageBox {
+      margin-top: 2em;
+      background-color: white;
+      height: 80%;
+    }
+  }
+}
+
+.boxShadow {
+  -webkit-box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.25);
+  box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.25);
+}

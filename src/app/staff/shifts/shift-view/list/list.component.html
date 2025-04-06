@@ -1,0 +1,50 @@
+<div *ngIf="!loadingData">
+  <mat-form-field style="width: 100%">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+    
+  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">  
+
+    <!-- Dynamic Columns -->
+    <ng-container [matColumnDef]="column" *ngFor="let column of dynamicColumns">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ getColumnName(column) }} </th>
+      <td mat-cell *matCellDef="let element"> {{ formatItem(element[column], column) }} </td>
+    </ng-container>
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select" *ngIf="allowAccept">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"
+      (click)="selection.toggle(row)">
+    </tr>
+
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+
+  <div id="buttonContainer" *ngIf="allowAccept">
+    <button mat-flat-button color="accent" (click)="updateShift(false)">Decline</button>
+    <button mat-flat-button color="primary" (click)="updateShift(true)">Accept</button>
+  </div>
+</div>
+
+<div id="spinnerContainer" *ngIf="loadingData">
+  <mat-spinner 
+    mode="indeterminate"
+    diameter=40
+    color="accent">
+  </mat-spinner>  
+</div>

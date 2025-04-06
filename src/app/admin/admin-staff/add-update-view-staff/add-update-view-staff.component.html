@@ -1,0 +1,94 @@
+<mat-card id="staffCard">
+  <mat-card-title>Staff Information
+    <mat-spinner
+      *ngIf="isLoading"
+      style="float: right"
+      mode="indeterminate"
+      diameter=20
+      color="accent">
+    </mat-spinner>
+  </mat-card-title>
+  <mat-card-content>
+
+    <form [formGroup]="staffForm" (ngSubmit)="submitStaff()" id="staffForm">
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <input matInput placeholder="First Name" required=true formControlName="firstName">
+            <mat-error *ngIf="staffForm.get('firstName').hasError('required')">First name required</mat-error>
+            <mat-error *ngIf="staffForm.get('firstName').hasError('maxlength')">First name length cannot exceed 50</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field>
+            <input matInput placeholder="Last Name" required=true formControlName="lastName">
+            <mat-error *ngIf="staffForm.get('lastName').hasError('required')">Last name required</mat-error>
+            <mat-error *ngIf="staffForm.get('lastName').hasError('maxlength')">Last name length cannot exceed 50</mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="col-3">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Date of birth" [max]="maxDate" formControlName="dob">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <input matInput type="email" placeholder="Email Address" required=true formControlName="email">
+            <mat-error *ngIf="staffForm.get('email').hasError('required')">Email required</mat-error>
+            <mat-error *ngIf="staffForm.get('email').hasError('invalidFormat') && !staffForm.get('email').hasError('required')">Invalid email format</mat-error>
+            <mat-error *ngIf="staffForm.get('email').hasError('email-taken')">Email already taken</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-4">
+          <mat-form-field>
+            <input matInput type="tel" placeholder="Phone Number" formControlName="phoneNum">
+            <mat-error *ngIf="staffForm.get('phoneNum').hasError('invalidFormat')">Phone must be a number</mat-error>
+            <mat-error *ngIf="staffForm.get('phoneNum').hasError('maxlength') && (staffForm.get('phoneNum').touched || staffForm.get('phoneNum').dirty)">
+              Phone length cannot exceed maximum length of 15
+            </mat-error>
+            <mat-error *ngIf="staffForm.get('phoneNum').hasError('minlength') && (staffForm.get('phoneNum').touched || staffForm.get('phoneNum').dirty)">
+              Phone length cannot be less than 6
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-2">
+            <mat-form-field>
+              <mat-select required=true placeholder="Role" formControlName="role">
+                <mat-option *ngFor="let role of possibleRoles" [value]="role">
+                  {{ upperFirstChar(role) }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="staffForm.get('role').hasError('required')">Role required</mat-error>
+              <mat-error *ngIf="staffForm.get('role').hasError('invalid')">Invalid role</mat-error>
+            </mat-form-field>
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="123 Fake Street" formControlName="address">
+            <mat-error *ngIf="staffForm.get('address').hasError('maxlength')">Address cannot exceed a maximum length of 300</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button mat-flat-button id="submitButton" [disabled]="isLoading" color="accent">{{ selectedOperation.action }}</button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+  

@@ -1,0 +1,142 @@
+@mixin md-icon-size($size: 24px) {
+    font-size: $size;
+    height: $size;
+    width: $size;
+    line-height: $size;
+}  
+
+$accent: #6bcace;
+$gray-text-accent: #efefef;
+$side-nav: #444040;
+$nav-item-pressed: #302f2f;
+
+#container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#pageContent {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.navContainer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    .toolbar {
+        button {
+            outline: none;
+            z-index: 1;
+        }
+
+        #toolbarProfile {
+            display: block;
+            position: absolute;
+            right: 0;
+            margin-right: 1em;
+            transition: 0.15s ease;
+
+            span {
+                font-size: 14px;
+                line-height: 42px;
+            }
+
+            #imageContainer {
+                float: left;
+            }
+        }
+    }
+
+    .divider {
+        width: 80%;
+        background-color: #7a7a7a;
+        margin: 0 auto 0 auto;
+    }
+
+    .sideNav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 250px;
+        background-color: $side-nav;
+
+        .navContent {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+
+            .sideNavHeader {
+                padding-top: 2em;
+                padding-bottom: 2em;
+
+                h3 {
+                    text-align: center;
+                    color: $accent;
+                }
+            }
+
+            .sideNavItem {
+                color: $gray-text-accent;
+
+                mat-chip {
+                    margin-left: 9.5em;
+                }
+
+                mat-icon {
+                    margin-right: 0.25em;
+                }
+            }
+
+            .selectedItem {
+                background-color: $nav-item-pressed;
+                -webkit-box-shadow: inset 0px 0px 2px 2px rgb(48, 44, 44);
+                -moz-box-shadow: inset 0px 0px 2px 2px rgb(48, 44, 44);
+                box-shadow: inset 0px 0px 2px 2px rgb(48, 44, 44);
+            }
+
+            .sideNavFooter {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                padding-bottom: 5%;
+                color: $gray-text-accent;
+
+                a {
+                    margin: auto;
+                    line-height: 0;
+                }
+
+                mat-divider {
+                    margin-bottom: 0.75em;
+                }
+            }
+        }
+    }
+}
+
+#imageContainer {
+    width: 42px;
+    height: 42px;
+    margin-right: 0.2em;
+
+    mat-icon {
+        @include md-icon-size(42px);
+    }
+
+    img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin: 3.5px;
+    }
+}

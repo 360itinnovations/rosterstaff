@@ -1,0 +1,7 @@
+<mat-tab-group>
+  <mat-tab label="Avaliable Shifts">
+    <app-shift-view [data]='pendingShiftStream' [allowAccept]='true'></app-shift-view>
+  </mat-tab>
+  <mat-tab label="Current Shifts"><app-shift-view [data]='currentShiftStream'></app-shift-view></mat-tab>
+  <mat-tab label="Shift History"><app-shift-view [data]='shiftHistoryStream'></app-shift-view></mat-tab>
+</mat-tab-group>

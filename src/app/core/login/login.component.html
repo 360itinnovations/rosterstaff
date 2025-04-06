@@ -1,0 +1,32 @@
+<div class="row" id="page">
+  <div id="loginContainer" class="align-self-center">
+    <div id="logo">
+      <img src="assets/svg/logo.svg">
+    </div>
+    <h4 id="title">Roster.Me</h4>
+    
+    <form [formGroup]="loginForm" id="formContainer" (ngSubmit)="login()">
+      <mat-form-field>
+        <input matInput type="email" placeholder="Email" formControlName="email" spellcheck=false (keyup.enter)="login()">
+        <mat-error *ngIf="loginForm.get('email').hasError('required')">Email required</mat-error>
+        <mat-error *ngIf="loginForm.get('email').hasError('invalid')">Email is invalid. Check email and try again</mat-error>
+        <mat-error *ngIf="loginForm.get('email').hasError('notFound')">Email not found. Check email and try again</mat-error>
+      </mat-form-field>
+            
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" formControlName="password" (keyup.enter)="login()">
+        <mat-error *ngIf="loginForm.get('password').hasError('required')">Password required</mat-error>
+        <mat-error *ngIf="loginForm.get('password').hasError('incorrect')">Incorrect Password</mat-error>
+        <mat-error *ngIf="loginForm.get('password').hasError('minlength')">Minimum length is 6</mat-error>
+      </mat-form-field>
+
+      <mat-checkbox id="checkbox" formControlName="keepSignedIn">Keep me signed in</mat-checkbox>
+
+      <button id="loginButton" mat-flat-button color="primary" (click)="login()" [disabled]="showLoading">Login
+        <mat-spinner id="spinner" mode="indeterminate" diameter=20 color="accent" *ngIf="showLoading"></mat-spinner>
+      </button>
+      
+      <p id="forgotPassword" (click)="openResetPass()">Forgot password</p>
+    </form>
+  </div>
+</div>

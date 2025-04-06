@@ -1,0 +1,55 @@
+<div id="container">
+  <mat-sidenav-container class="navContainer">
+    <mat-sidenav-content>
+      <mat-toolbar color="primary" class="toolbar">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon id="menu" matBadge="{{ menuService.getTotalNotifications() }}" matBadgeColor="accent"
+            matBadgePosition="above after" color="black" [matBadgeHidden]="menuService.getTotalNotifications() == 0 || opened">
+            menu
+          </mat-icon>
+        </button>
+        <div id="toolbarProfile" [ngStyle]="{'opacity': opened ? '0': '1'}">
+          <div id="imageContainer">
+            <mat-icon *ngIf="!imageUrl || imageError">account_circle</mat-icon>
+            <img *ngIf="imageUrl && !imageError" [src]="imageUrl" (error)="imageError = true">
+          </div>
+          <span>{{ getName() }}</span>
+        </div>
+      </mat-toolbar>
+
+      <router-outlet id="pageContent"></router-outlet>    
+    </mat-sidenav-content>
+
+    <mat-sidenav class="sideNav" #sidenav mode="side" [(opened)]="opened">
+      <mat-nav-list class="navContent">
+        <div class="sideNavHeader">
+          <h3 color="primary">{{ userService.org.selectedOrg }}</h3>
+          <mat-divider class="divider"></mat-divider>
+        </div>
+
+        <a mat-list-item class="sideNavItem" *ngFor="let menu of menuItems; index as i" [routerLink]=[menu.routerLink]
+          routerLinkActive="selectedItem">
+          <mat-icon>{{ menu.icon }}</mat-icon>{{ menu.name }}
+          <mat-chip-list *ngIf="menu.hasBadge && menu.badgeNum != 0">
+            <mat-chip color="accent" selected>{{ menu.badgeNum }}</mat-chip>
+          </mat-chip-list>
+        </a>
+
+        <a mat-list-item class="sideNavItem" (click)="logout()">
+          <mat-icon>subdirectory_arrow_left</mat-icon>Logout
+        </a>
+
+        <div class="sideNavFooter">
+          <mat-divider class="divider"></mat-divider>
+          <a mat-list-item>
+            <div id="imageContainer">
+              <mat-icon *ngIf="!imageUrl || imageError">account_circle</mat-icon>
+              <img *ngIf="imageUrl && !imageError" [src]="imageUrl" (error)="imageError = true">
+            </div>
+            {{ getName() }}
+          </a>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
+  </mat-sidenav-container>
+</div>

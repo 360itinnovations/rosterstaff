@@ -1,0 +1,87 @@
+@mixin md-icon-size($size: 24px) {
+  font-size: $size;
+  height: $size;
+  width: $size;
+  line-height: $size;
+} 
+
+#container {
+  width: 100%;
+  height: 100%;
+
+  #titleContainer {
+    padding: 25px 40px 25px 40px; 
+  }
+
+  #messageContainer {
+    height: calc(100% - 86px);
+    overflow-y: auto;
+
+    .messageBox:hover {
+      background-color: rgb(233, 233, 233);
+      transition: 0.25s ease;
+    }
+    
+    .messageBox:active {
+      background-color: rgb(201, 201, 201);
+      transition: none;
+    }
+
+    .message {
+      display: flex;
+      width: 95%;
+      padding: 7.5px 0 5px 0;
+      margin: auto;
+      max-width: 100%;
+      border-bottom: 1px solid #c0c0c0;
+
+      .profilePicture {
+        width: 55px;
+
+        mat-icon {
+          @include md-icon-size(55px);
+        }
+      }
+
+      .messageDetails {
+        margin-left: 5px;
+        flex-grow: 1;
+
+        .messageTitle {
+          font-size: 20px;
+          font-weight: 600;
+        }
+      }
+
+      .messageDate {
+        flex-shrink: 0;
+        width: fit-content;
+        text-align: right;
+      }
+    }
+  }
+}
+
+#messageContainer::-webkit-scrollbar-track
+{
+  border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#messageContainer::-webkit-scrollbar
+{
+	width: 7.5px;
+	background-color: #F5F5F5;
+}
+
+#messageContainer::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #444040;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

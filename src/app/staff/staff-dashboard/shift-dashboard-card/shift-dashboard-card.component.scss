@@ -1,0 +1,32 @@
+#cardContainer {
+  display: flex;
+  align-items: baseline;
+  height: 100%;
+  width: 100%;
+  transition: 0.2s ease;
+
+  #content {
+    width: fit-content;
+    margin: auto;
+
+    span {
+      vertical-align: middle;
+    }
+
+    #number {
+      font-size: 3em;
+    }
+
+    #description {
+      margin-left: 1em
+    }
+  }
+}
+
+#cardContainer:hover {
+  color: rgb(126, 126, 126);
+}
+
+#cardContainer:active {
+  color: rgb(0, 0, 0);
+}

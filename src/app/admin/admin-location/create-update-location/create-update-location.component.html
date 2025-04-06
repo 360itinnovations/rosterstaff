@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>{{ dialogDetails.title }}
+  <mat-spinner *ngIf="isLoading" style="float: right" mode="indeterminate" diameter=20 color="accent">
+  </mat-spinner>
+</h1>
+<form [formGroup]="locationForm" (ngSubmit)="submitLocation()">
+  <div mat-dialog-content>
+    <div class="row">
+      <mat-form-field class="formField">
+        <input matInput placeholder="Description" formControlName="description">
+        <mat-error *ngIf="locationForm.get('description').hasError('required')">Description required</mat-error>
+        <mat-error *ngIf="locationForm.get('description').hasError('maxlength')">Max 300 characters</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="formField">
+        <input matInput placeholder="Address" formControlName="address">
+        <mat-error *ngIf="locationForm.get('address').hasError('required')">Address required</mat-error>
+        <mat-error *ngIf="locationForm.get('address').hasError('maxlength')">Max 300 characters</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div mat-dialog-actions id="buttonContainer">
+    <button type="button" mat-button (click)="onNoClick()">Cancel</button>
+    <button type="submit" mat-flat-button color="accent" id="addLoc" [disabled]="isLoading">{{ dialogDetails.action }}</button>
+  </div>
+</form>

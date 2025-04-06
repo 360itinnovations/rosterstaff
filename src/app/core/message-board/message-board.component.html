@@ -1,0 +1,19 @@
+<div id="container">
+  <div id="titleContainer"><h4>Message Board</h4></div>
+  <div id="messageContainer">
+    <div class="messageBox" *ngFor="let message of messages">
+      <div class="message">
+        <div class="profilePicture">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+        <div class="messageDetails truncate">
+          <div class="truncate messageTitle">{{ message.title }}</div>
+          <div class="truncate">{{ message.name }}</div>
+        </div>
+        <div class="messageDate">
+          {{ message.date }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

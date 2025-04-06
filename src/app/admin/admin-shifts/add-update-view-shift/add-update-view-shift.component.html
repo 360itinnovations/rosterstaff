@@ -1,0 +1,96 @@
+<div id="shiftContainer">
+  <!-- New Shift Card -->
+  <mat-card id="shiftCard">
+    <mat-card-title>Shift Information
+      <mat-spinner
+        *ngIf="isLoading.shift"
+        style="float: right"
+        mode="indeterminate"
+        diameter=20
+        color="accent">
+      </mat-spinner>
+    </mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="shiftForm" (ngSubmit)="submitShift()" id="newShiftForm">
+        <div class="row">
+          <!-- Location input field -->
+          <div class="col">
+            <mat-form-field>
+              <mat-select required=true placeholder="{{ isLoading.location ? 'Loading Locations' : 'Location' }}" formControlName="location" [(ngModel)]="selectedLocation">
+                <mat-option (click)="addNewLocation()"><mat-icon>add</mat-icon>Add new location</mat-option>
+                <mat-option *ngFor="let location of locations" [value]="location">
+                  {{location.description}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="shiftForm.get('location').hasError('required')">Location required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Date input field -->
+          <div class="col-4">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" [min]="minDate" placeholder="Date" formControlName="date" required=true>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="shiftForm.get('date').hasError('required')">Date required</mat-error>
+              <mat-error *ngIf="shiftForm.get('date').hasError('matDatepickerMin')">Date cannot be in the past</mat-error> 
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Start time field -->
+          <div class="col">
+            <mat-form-field>
+              <input type="number" matInput placeholder="Start Time" formControlName="start" required=true>
+              <mat-error *ngIf="shiftForm.get('start').hasError('required')">Start time required</mat-error>
+              <mat-error *ngIf="shiftForm.get('start').hasError('min')">Start time must be greater than 0</mat-error>
+              <mat-error *ngIf="shiftForm.get('start').hasError('max')">Start time cannot exceed 2400</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- End time field -->
+          <div class="col">
+            <mat-form-field>
+              <input type="number" matInput placeholder="End Time" formControlName="end" required=true>
+              <mat-error *ngIf="shiftForm.get('end').hasError('required')">End time required</mat-error>
+              <mat-error *ngIf="shiftForm.get('end').hasError('min')">End time must be greater than 0</mat-error>
+              <mat-error *ngIf="shiftForm.get('end').hasError('max')">End time cannot exceed 2400</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Break duration field -->
+          <div class="col">
+            <mat-form-field>
+              <input type="number" matInput placeholder="Break Duration" formControlName="breakDuration">
+              <mat-error *ngIf="shiftForm.get('breakDuration').hasError('min')">Break time must be greater than 0</mat-error>
+              <mat-error *ngIf="shiftForm.get('breakDuration').hasError('max')">Break time cannot exceed 2400</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Note field -->
+          <div class="col">
+            <mat-form-field>
+              <textarea matInput placeholder="Note" formControlName="note"></textarea>
+              <mat-error *ngIf="shiftForm.get('note').hasError('maxlength')">Note cannot exceed 300 characters</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-2" class="verticallyCenterItems" *ngIf="selectedOperation.action">
+            <button mat-flat-button color="accent" id="submitButton" [disabled]="isLoading.shift">{{ selectedOperation.action }}</button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Roster Staff Card -->
+  <mat-card id="rosterStaffCard">
+    <mat-card-title>Rostered Staff</mat-card-title>
+    <mat-card-content>
+      <app-roster-staff-table *ngIf="!isLoading.staff" [staffUIDArray]="staffUIDArray" [editTable]=editTable></app-roster-staff-table>
+    </mat-card-content>
+  </mat-card>
+</div>

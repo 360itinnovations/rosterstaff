@@ -1,0 +1,13 @@
+<div id="shiftLocationContainer">
+  <mat-card id="shiftLocationCard">
+    <mat-card-title id="title">Shift Locations</mat-card-title>
+    <button mat-flat-button color="accent" id="addLocationButton" (click)="addLocation()">Add Location</button>
+
+    <app-table-list
+      [inputStream]="locationStream"
+      [prettifiedColumns]="prettifiedColumns"
+      [columnsToDisplay]="columnsToDisplay"
+      (itemClicked)="openBottomSheet($event)">
+    </app-table-list>    
+  </mat-card>
+</div>

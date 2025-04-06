@@ -1,0 +1,17 @@
+<mat-card-content>
+  <mat-form-field style="width: 100%">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+
+  <mat-spinner *ngIf="isLoading" id="spinner" mode="indeterminate" diameter=40 color="accent"></mat-spinner>
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="!isLoading">
+    <ng-container [matColumnDef]="column" *ngFor="let column of columnsToDisplay">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ getPrettifiedColumn(column) }} </th>
+      <td mat-cell *matCellDef="let item"> {{ formatItem(item[column], column) }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row class="tableRow" *matRowDef="let row; columns: columnsToDisplay;" (click)="rowSelected(row)"></tr>
+  </table>
+</mat-card-content>

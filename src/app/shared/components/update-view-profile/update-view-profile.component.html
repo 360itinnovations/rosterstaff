@@ -1,0 +1,95 @@
+<mat-card id="profileCard">
+  <mat-card-title>Profile Information
+    <mat-spinner *ngIf="isLoading" style="float: right" mode="indeterminate" diameter=20 color="accent">
+    </mat-spinner>
+  </mat-card-title>
+
+  <mat-card-content>
+    <input type="file" #file accept="image/*" style="display: none" (change)="uploadPicture()" />
+    <div class="row">
+      <div id="pictureContainer" class="noselect">
+        <div style="margin: auto; width: fit-content">
+          <div class="profilePicture">
+            <img class="image" [ngClass]="{ lessOpacity: dpIsLoading }" *ngIf="profileDpUrl" [src]="profileDpUrl">
+            <mat-icon class="image" [ngClass]="{ lessOpacity: dpIsLoading }" id="dpPlaceholder" *ngIf="!profileDpUrl">account_circle</mat-icon>
+            <div class="overlay" [ngClass]="{ maxOpacity: dpIsLoading }">
+              <div *ngIf="!dpIsLoading">
+                <mat-icon (click)="deletePicture()" *ngIf="profileDpUrl">delete</mat-icon>
+                <mat-icon (click)="openUpload()">cloud_upload</mat-icon>
+              </div>
+              <mat-spinner *ngIf="dpIsLoading" mode="indeterminate" diameter=40 color="accent"></mat-spinner>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="updateDetails()" id="profileForm" class="col">
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <input matInput placeholder="First Name" required=true formControlName="firstName">
+              <mat-error *ngIf="profileForm.get('firstName').hasError('required')">First name required</mat-error>
+              <mat-error *ngIf="profileForm.get('firstName').hasError('maxlength')">First name length cannot exceed 50</mat-error>
+            </mat-form-field>
+          </div>
+  
+          <div class="col">
+            <mat-form-field>
+              <input matInput placeholder="Last Name" required=true formControlName="lastName">
+              <mat-error *ngIf="profileForm.get('lastName').hasError('required')">Last name required</mat-error>
+              <mat-error *ngIf="profileForm.get('lastName').hasError('maxlength')">Last name length cannot exceed 50</mat-error>
+            </mat-form-field>
+          </div>
+  
+          <div class="col-3">
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Date of birth" [max]="maxDate" formControlName="dob">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <input matInput type="email" placeholder="Email Address" required=true readonly="true" formControlName="email">
+              <mat-error *ngIf="profileForm.get('email').hasError('required')">Email required</mat-error>
+              <mat-error *ngIf="profileForm.get('email').hasError('invalidFormat') && !profileForm.get('email').hasError('required')">Invalid email format</mat-error>
+              <mat-error *ngIf="profileForm.get('email').hasError('email-taken')">Email already taken</mat-error>
+            </mat-form-field>
+          </div>
+  
+          <div class="col-4">
+            <mat-form-field>
+              <input matInput type="tel" placeholder="Phone Number" formControlName="phoneNum">
+              <mat-error *ngIf="profileForm.get('phoneNum').hasError('invalidFormat')">Phone must be a number</mat-error>
+              <mat-error *ngIf="profileForm.get('phoneNum').hasError('maxlength') && (profileForm.get('phoneNum').touched || profileForm.get('phoneNum').dirty)">
+                Phone length cannot exceed maximum length of 15
+              </mat-error>
+              <mat-error *ngIf="profileForm.get('phoneNum').hasError('minlength') && (profileForm.get('phoneNum').touched || profileForm.get('phoneNum').dirty)">
+                Phone length cannot be less than 6
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Address</mat-label>
+              <input matInput placeholder="123 Fake Street" formControlName="address">
+              <mat-error *ngIf="profileForm.get('address').hasError('maxlength')">Address cannot exceed a maximum length of 300</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col">
+            <button mat-flat-button id="submitButton" [disabled]="isLoading" color="accent">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

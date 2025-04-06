@@ -1,0 +1,14 @@
+
+<mat-tab-group (selectedTabChange)="tabChanged($event)" [selectedIndex]="selected.value">
+  <mat-tab label="View Shifts">
+    <app-view-shift (changeTab)="changeTab($event)"></app-view-shift>
+  </mat-tab>
+
+  <mat-tab label="Add Shift">
+    <app-add-update-view-shift type="add"></app-add-update-view-shift>
+  </mat-tab>
+
+  <mat-tab label="{{ newTab.title }}" *ngIf="newTab">
+    <app-add-update-view-shift [type]="newTab.type" [inputShift]="selectedShift"></app-add-update-view-shift>
+  </mat-tab>
+</mat-tab-group>

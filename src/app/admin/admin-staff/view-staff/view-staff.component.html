@@ -1,0 +1,13 @@
+<div id="staffContainer">
+  <mat-card id="staffCard">
+    <mat-card-title id="title">View Staff</mat-card-title>
+    <button mat-flat-button color="accent" id="addStaffButton" (click)="addStaff()">Add Staff</button>
+
+    <app-table-list
+      [inputStream]="staffStream"
+      [prettifiedColumns]="prettifiedColumns"
+      [columnsToDisplay]="columnsToDisplay"
+      (itemClicked)="openBottomSheet($event)"
+    ></app-table-list>
+  </mat-card>
+</div>

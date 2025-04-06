@@ -1,0 +1,15 @@
+<div id="toggleView">
+  <button mat-icon-button [disabled]="showList" (click)="showList = !showList">
+    <mat-icon>view_list</mat-icon>
+  </button>
+  <button mat-icon-button [disabled]="!showList" (click)="showList = !showList">
+    <mat-icon>calendar_today</mat-icon>
+  </button>
+</div>
+
+<div>
+  <div id="content">
+    <app-list *ngIf="showList" [allowAccept]='allowAccept' [shiftStream]='data'></app-list>
+    <app-calendar *ngIf="!showList" [shiftData]='data'></app-calendar>
+  </div>
+</div>
